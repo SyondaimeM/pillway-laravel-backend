@@ -51,4 +51,17 @@ class AuthTest extends TestCase
         $response->assertStatus(200)
                  ->assertJson(['message' => 'Successfully logged out']);
     }
+
+    public function test_user_can_refresh_token()
+    {
+        $user = User::factory()->create();
+        $token = auth()->login($user);
+
+        $response = $this->postJson('/api/refresh', [], [
+            'Authorization' => "Bearer $token"
+        ]);
+
+        $response->assertStatus(200)
+                 ->assertJsonStructure(['access_token', 'token_type', 'expires_in']);
+    }
 }
