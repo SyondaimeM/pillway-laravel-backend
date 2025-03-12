@@ -1,66 +1,242 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Pillway - Laravel Backend
 
-## About Laravel
+## Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This repository contains the Laravel backend for the Pillway project. The backend provides user authentication, token-based JWT authentication, and serves data for the dynamic dashboard.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **JWT-based Authentication**: Secure user authentication using JSON Web Tokens (JWT).
+- **Posts API**: Provides an API for fetching posts from `https://jsonplaceholder.typicode.com/posts`.
+- **Unit Tests**: Includes test cases for verifying the JWT functionality.
 
-## Learning Laravel
+### Project Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/SyondaimeM/pillway-laravel-backend.git
+   cd pillway-laravel-backend
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Set up the environment:
+   - Copy the `.env.example` to `.env`.
+   - Generate the application key and JWT secret:
+     ```bash
+     cp .env.example .env
+     php artisan key:generate
+     php artisan jwt:secret
+     ```
 
-## Laravel Sponsors
+4. Run the migrations:
+   ```bash
+   php artisan migrate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. Serve the application:
+   ```bash
+   php artisan serve
+   ```
 
-### Premium Partners
+   The backend API should now be available at `http://localhost:8000`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### JWT Authentication
 
-## Contributing
+The backend uses JWT for authenticating users. The `/login` endpoint expects credentials and returns a JWT upon successful authentication. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Testing
 
-## Code of Conduct
+Unit tests are included to test the JWT-based authentication system.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+To run the tests:
+```bash
+php artisan test
+```
 
-## Security Vulnerabilities
+This will execute all tests, including the JWT authentication tests.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+# API Documentation 📝# API Documentation for Authentication
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Base URL
+http://your-api-url.com/api
+
+pgsql
+Copy
+Edit
+
+### **1. User Registration**
+
+- **Endpoint**: `/register`
+- **Method**: `POST`
+- **Description**: Registers a new user in the system.
+- **Request Body**:
+    ```json
+    {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "password": "password123",
+        "password_confirmation": "password123"
+    }
+    ```
+- **Response**:
+    - **Success**:
+    ```json
+    {
+        "message": "User successfully registered.",
+        "user": {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john@example.com"
+        },
+        "token": "JWT_TOKEN_HERE"
+    }
+    ```
+    - **Error**:
+    ```json
+    {
+        "error": "Validation error",
+        "messages": {
+            "email": ["The email has already been taken."]
+        }
+    }
+    ```
+
+---
+
+### **2. User Login**
+
+- **Endpoint**: `/login`
+- **Method**: `POST`
+- **Description**: Authenticates the user and provides an access token.
+- **Request Body**:
+    ```json
+    {
+        "email": "john@example.com",
+        "password": "password123"
+    }
+    ```
+- **Response**:
+    - **Success**:
+    ```json
+    {
+        "message": "Login successful",
+        "token": "JWT_ACCESS_TOKEN_HERE",
+        "refresh_token": "JWT_REFRESH_TOKEN_HERE"
+    }
+    ```
+    - **Error**:
+    ```json
+    {
+        "error": "Invalid credentials"
+    }
+    ```
+
+---
+
+### **3. User Logout**
+
+- **Endpoint**: `/logout`
+- **Method**: `POST`
+- **Description**: Logs the user out by invalidating the access token.
+- **Headers**: 
+    - `Authorization: Bearer <ACCESS_TOKEN>`
+- **Response**:
+    - **Success**:
+    ```json
+    {
+        "message": "Successfully logged out."
+    }
+    ```
+    - **Error**:
+    ```json
+    {
+        "error": "Unauthorized"
+    }
+    ```
+
+---
+
+### **4. Refresh Token**
+
+- **Endpoint**: `/refresh`
+- **Method**: `POST`
+- **Description**: Refreshes the JWT token using the provided refresh token.
+- **Request Body**:
+    ```json
+    {
+        "refresh_token": "YOUR_REFRESH_TOKEN_HERE"
+    }
+    ```
+- **Response**:
+    - **Success**:
+    ```json
+    {
+        "message": "Token refreshed successfully.",
+        "token": "NEW_JWT_ACCESS_TOKEN_HERE"
+    }
+    ```
+    - **Error**:
+    ```json
+    {
+        "error": "Invalid refresh token"
+    }
+    ```
+
+---
+
+## Error Handling
+
+- All API responses with errors will return an HTTP status code and a response body containing the error message.
+- **Validation errors**: Will return a `422 Unprocessable Entity` status.
+- **Unauthorized errors**: Will return a `401 Unauthorized` status.
+- **Other errors**: Will return a `500 Internal Server Error` status.
+
+---
+
+## Example Requests
+
+1. **Register Request**:
+    ```bash
+    curl -X POST http://your-api-url.com/api/register \
+    -H "Content-Type: application/json" \
+    -d '{"name":"John Doe","email":"john@example.com","password":"password123","password_confirmation":"password123"}'
+    ```
+
+2. **Login Request**:
+    ```bash
+    curl -X POST http://your-api-url.com/api/login \
+    -H "Content-Type: application/json" \
+    -d '{"email":"john@example.com","password":"password123"}'
+    ```
+
+3. **Logout Request**:
+    ```bash
+    curl -X POST http://your-api-url.com/api/logout \
+    -H "Authorization: Bearer <ACCESS_TOKEN>"
+    ```
+
+4. **Refresh Token Request**:
+    ```bash
+    curl -X POST http://your-api-url.com/api/refresh \
+    -H "Content-Type: application/json" \
+    -d '{"refresh_token":"YOUR_REFRESH_TOKEN_HERE"}'
+    ```
+
+---
+
+## Conclusion
+This API allows users to register, log in, log out, and refresh their tokens. It ensures secure authentication through the use of JWT tokens and provides appropriate error handling and responses for different scenarios.
+
+---
+
+You can replace `your-api-url.com` with the actual backend URL.
+
+Feel free to add any extra details like API versioning or additional security headers if needed.
+
+Let me know if you need more modifications or additions!
