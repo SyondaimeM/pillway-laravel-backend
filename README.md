@@ -11,6 +11,9 @@ This repository contains the Laravel backend for the Pillway project. The backen
 - **Posts API**: Provides an API for fetching posts from `https://jsonplaceholder.typicode.com/posts`.
 - **Unit Tests**: Includes test cases for verifying the JWT functionality.
 
+###Watch DEMO 
+[![Watch the video](public/demo.mp4)]
+
 ### Project Setup
 
 1. Clone the repository:
