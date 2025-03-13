@@ -5,6 +5,14 @@
 
 This repository contains the Laravel backend for the Pillway project. The backend provides user authentication, token-based JWT authentication, and serves data for the dynamic dashboard.
 
+
+This repository contains the Angular frontend for the Pillway project, a dynamic dashboard application with user authentication, a data table integrated with an API, and several interactive features like search/filtering, pagination, sorting, and a dark mode toggle.
+
+This project consists of a frontend and backend for the Pillway application. The frontend is built using Angular, and the backend is powered by Laravel.
+
+- **Frontend Repository:** [Pillway Angular Frontend](https://github.com/SyondaimeM/pillway-angular-frontend)
+- **Backend Repository:** [Pillway Laravel Backend](https://github.com/SyondaimeM/pillway-laravel-backend)
+
 ### Features
 
 - **JWT-based Authentication**: Secure user authentication using JSON Web Tokens (JWT).
