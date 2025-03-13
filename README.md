@@ -12,7 +12,7 @@ This repository contains the Laravel backend for the Pillway project. The backen
 - **Unit Tests**: Includes test cases for verifying the JWT functionality.
 
 ###Watch DEMO 
-[![Watch the video](public/demo.mp4)]
+[![Watch the video](https://youtu.be/zCaCJXG9mjM)]
 
 ### Project Setup
 
